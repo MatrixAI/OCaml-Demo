@@ -4,15 +4,12 @@
 }:
   with pkgs;
   let
-    ocamlPackages = lib.getAttrFromPath (lib.splitString "." ocamlPath) ocaml-ng;
-    # we use ocamlPackages.ocaml
-    # ocamlPackages.... etc
-    # but buildOcaml isn't there though...
-    # so buildOcaml doesn't use this new ocaml-ng
+    ocamlPackagess = lib.getAttrFromPath (lib.splitString "." ocamlPath) ocaml-ng;
   in
-    buildOcaml {
+    stdenv.mkDerivation {
       name = "OCaml-Demo";
       version = "0.0.1";
+      buildInputs = with ocamlPackages; [ ocaml findlib ocamlbuild camlp4 ];
       src = lib.cleanSourceWith {
         filter = (path: type:
           ! (builtins.any
@@ -23,4 +20,6 @@
         );
         src = lib.cleanSource attrs.src;
       };
+      createFindlibDestdir = false;
+      dontStrip = true;
     }
