@@ -1,0 +1,12 @@
+(executable
+  (name hello)
+  (public_name hello-world)
+  (package ocaml-demo)
+  (libraries demo)
+  (modes
+    (native exe)
+    (byte exe)
+    (native shared_object)
+    (byte shared_object)
+    (native object)
+    (byte object)))

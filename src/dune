@@ -1,0 +1,4 @@
+(library
+  (name demo)
+  (public_name ocaml-demo.demo)
+  (libraries core))

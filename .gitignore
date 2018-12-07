@@ -8,6 +8,9 @@
 *.cmxs
 *.cmxa
 
+# opam installation files
+*.install
+
 # ocamlbuild working directory
 _build/
 

@@ -4,12 +4,14 @@
 }:
   with pkgs;
   let
-    ocamlPackagess = lib.getAttrFromPath (lib.splitString "." ocamlPath) ocaml-ng;
+    ocamlPackages = lib.getAttrFromPath (lib.splitString "." ocamlPath) ocaml-ng;
   in
-    stdenv.mkDerivation {
-      name = "OCaml-Demo";
+    ocamlPackages.buildDunePackage {
+      pname = "ocaml-demo";
       version = "0.0.1";
-      buildInputs = with ocamlPackages; [ ocaml findlib ocamlbuild camlp4 ];
+      buildInputs = with ocamlPackages; [
+        core
+      ];
       src = lib.cleanSourceWith {
         filter = (path: type:
           ! (builtins.any
@@ -18,8 +20,6 @@
               "\.env"
             ])
         );
-        src = lib.cleanSource attrs.src;
+        src = lib.cleanSource ./.;
       };
-      createFindlibDestdir = false;
-      dontStrip = true;
     }

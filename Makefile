@@ -1,11 +1,19 @@
-.DEFAULT_GOAL := main
+INSTALL_ARGS := $(if $(PREFIX),--prefix $(PREFIX),)
 
-%.native:
-	ocamlbuild -use-ocamlfind -I src $@
+.DEFAULT_GOAL := default
+
+default:
+	dune build @install
+
+install:
+	dune install $(INSTALL_ARGS)
+
+uninstall:
+	dune uninstall $(INSTALL_ARGS)
+
+reinstall: uninstall install
 
 clean:
-	ocamlbuild -clean
+	dune clean
 
-main: main.native
-
-.PHONY: main clean
+.PHONY: default install uninstall reinstall clean
