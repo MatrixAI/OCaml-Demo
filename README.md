@@ -1,8 +1,8 @@
 # OCaml Demo
 
-This is an exmaple OCaml project using Nix to setup a development environment.
+This is an example OCaml project using Nix to setup a development environment.
 
-This uses Dune as its builder and the OCaml Package Manager. Dune replaces `ocamlbuild` and is more sophisticated builder. The OCaml Package Manager is not used for bringing in dependencies, only as a way to create the `*.opam` file and interaction with the Opam service.
+This uses Dune as its builder and the OCaml Package Manager. Dune replaces `ocamlbuild` and is a more sophisticated builder. The OCaml Package Manager is not used for bringing in dependencies, only as a way to create the `*.opam` file and interaction with the Opam service.
 
 The Nix derivation in `default.nix` uses the `ocamlPackages.buildDunePackage` function. This function is designed for building OCaml libraries. If you are building an application using OCaml, then you need to use `stdenv.mkDerivation` instead. However if you do so, you need to instead use `name` instead of `pname` and use `buildInputs = with ocamlPackages; [ ocaml dune findlib ]` to bring in the OCaml compilation pipeline. You also need to replicate the `buildPhase`, `checkPhase` and `installPhase` that is in the `buildDunePackage` function. See https://github.com/NixOS/nixpkgs/blob/master/pkgs/build-support/ocaml/dune.nix for more information.
 
